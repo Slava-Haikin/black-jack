@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Класс Round управляет раундами игры.
-# 
+#
 class Round
   def initialize(interface)
     @interface = interface

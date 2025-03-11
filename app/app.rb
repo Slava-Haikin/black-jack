@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Класс App управляет всем приложением.
-# 
+#
 class App
   def initialize
     @player = HumanPlayer.new
@@ -9,10 +9,10 @@ class App
     @interface = Interface.new
   end
 
-  def startGame
+  def start_game
     # Основная логика игры
     print 'Game started!'
   end
 end
 
-App.startGame
+App.start_game

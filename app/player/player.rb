@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Класс Player представляет игрока в блэкджеке.
-# 
+#
 class Player
   attr_accessor :name, :balance
   attr_reader :hand
