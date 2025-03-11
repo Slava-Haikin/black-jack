@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Класс App управляет всем приложением.
+# 
 class App
   def initialize
     @player = HumanPlayer.new
