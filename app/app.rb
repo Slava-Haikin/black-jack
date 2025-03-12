@@ -19,14 +19,20 @@ class App
   end
 
   def start_game
-    create_player()
+    create_player
     @interface.show_welcome_message(@player.name, @dealer.name, @player.balance, @dealer.balance)
-    # loop do
-    #   round_result = Round.new(:player, :dealer).start
-    # end
+
+    loop do
+      # round_result = Round.new(@player, @dealer).start
+
+      want_exit = @interface.ask_exit_game
+
+      return if want_exit
+    end
   end
 
   private
+
   def create_player
     player_name = @interface.ask_player_name
     @player = HumanPlayer.new(player_name)
