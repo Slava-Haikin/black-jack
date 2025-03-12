@@ -20,7 +20,7 @@ class Deck
 
   def calculate_card_value(current_score, card)
     value = card[1..]
-  
+
     case value
     when 'A'
       current_score + 11 > 21 ? 1 : 11

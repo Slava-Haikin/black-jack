@@ -13,15 +13,19 @@ class Round
   end
 
   def start
-    deal_cards()
+    deal_cards
     puts @player.hand, @dealer.hand, @player.name
   end
 
   def deal_cards
-    2.times do 
+    2.times do
       player_card = @deck.draw_card
       dealer_card = @deck.draw_card
+      player_card_score = @deck.calculate_card_value(@player_score, player_card)
+      dealer_card_score = @deck.calculate_card_value(@dealer_score, dealer_card)
 
+      @player_score += player_card_score
+      @player_score += dealer_card_score
       @player.take_card(player_card)
       @dealer.take_card(dealer_card)
     end
