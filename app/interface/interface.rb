@@ -31,12 +31,12 @@ class Interface
   end
 
   def ask_player_name
-    print 'What is your name, player? Your name is: '
+    print 'What is your name, player? My name is: '
     prompt.capitalize
   end
 
   def ask_exit_game
-    print 'Do you want to continue the game? Yes/No: '
+    print 'Do you want to continue the game, Yes/No? My answer is: '
     answer = prompt.capitalize
 
     answer.downcase != 'yes'

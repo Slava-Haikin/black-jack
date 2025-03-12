@@ -3,15 +3,27 @@
 # Класс Round управляет раундами игры.
 #
 class Round
-  def initialize(interface)
+  def initialize(player, dealer, interface)
+    @player = player
+    @dealer = dealer
+    @deck = Deck.new
     @interface = interface
+    @player_score = 0
+    @dealer_score = 0
   end
 
-  def start_first_round
-    puts 'First round started.'
+  def start
+    deal_cards()
+    puts @player.hand, @dealer.hand, @player.name
   end
 
-  def start_new_round
-    puts 'New round started.'
+  def deal_cards
+    2.times do 
+      player_card = @deck.give_card
+      dealer_card = @deck.give_card
+
+      @player.take_card(player_card)
+      @dealer.take_card(dealer_card)
+    end
   end
 end

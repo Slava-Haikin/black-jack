@@ -23,7 +23,7 @@ class App
     @interface.show_welcome_message(@player.name, @dealer.name, @player.balance, @dealer.balance)
 
     loop do
-      # round_result = Round.new(@player, @dealer).start
+      round_result = Round.new(@player, @dealer, @interface).start
 
       should_exit = @player.balance.zero?
       want_exit = @interface.ask_exit_game
