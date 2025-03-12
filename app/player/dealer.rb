@@ -4,6 +4,6 @@
 #
 class Dealer < Player
   def initialize
-    super('dealer')
+    super('Dealer')
   end
 end

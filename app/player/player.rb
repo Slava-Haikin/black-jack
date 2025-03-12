@@ -6,14 +6,14 @@ class Player
   attr_accessor :name, :balance
   attr_reader :hand
 
-  def initialize
-    @name = nil
+  def initialize(name)
+    @name = name
     @balance = 100
     @hand = []
   end
 
   def take_card(card)
-    @cards << card
+    @hand << card
   end
 
   def drop_cards
