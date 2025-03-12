@@ -6,21 +6,21 @@ require_relative 'round/round'
 
 require_relative 'player/player'
 require_relative 'player/dealer'
-require_relative 'player/human_player'
+require_relative 'player/user'
 
 require_relative 'interface/interface'
 require_relative 'deck/deck'
 
 class App
   def initialize
-    @player = nil
+    @user = nil
     @dealer = Dealer.new
     @interface = Interface.new
   end
 
   def play_game
     create_player
-    @interface.show_welcome_message(@player.name, @dealer.name, @player.balance, @dealer.balance)
+    @interface.show_welcome_message(@user.name, @dealer.name, @user.balance, @dealer.balance)
 
     loop do
       should_exit = play_round
@@ -32,18 +32,18 @@ class App
 
   def create_player
     player_name = @interface.ask_player_name
-    @player = HumanPlayer.new(player_name)
+    @user = User.new(player_name)
   end
 
   def play_round
-    Round.new(@player, @dealer, @interface).start
+    Round.new(@user, @dealer, @interface).start
 
-    game_over = @player.balance.zero?
+    game_over = @user.balance.zero? || @dealer.balance.zero?
     want_exit = @interface.ask_exit_game
 
     return false unless want_exit || game_over
 
-    @interface.show_exit_message(@player.name, @dealer.name, @player.balance, @dealer.balance)
+    @interface.show_exit_message(@user.name, @dealer.name, @user.balance, @dealer.balance)
     true
   end
 end

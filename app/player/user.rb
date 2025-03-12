@@ -2,8 +2,6 @@
 
 # Класс HumanPlayer представляет компьютерного игрока в блэкджеке.
 #
-class HumanPlayer < Player
-  def open_cards
-    # Запрос на открытие карт
-  end
+class User < Player
+  def make_turn(move_turn); end
 end

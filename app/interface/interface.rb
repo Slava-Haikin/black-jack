@@ -3,10 +3,17 @@
 # Класс Interface представляет текстовый интерфейс и вводом пользовательского выбора.
 #
 class Interface
-  # Здесь будут инициализированы разные типы меню
+  USER_MENU = [
+    { command: :skip, title: '[S]kip turn', input: ['s', 'skip turn', 'skip']},
+    { command: :open, title: '[O]pen cards', input: ['o', 'open cards', 'open']},
+    { command: :add, title: '[A]dd card', input: ['a', 'add card', 'add']},
+].freeze
 
-  def show_menu(_menu_type)
-    puts
+  def show_menu(menu)
+    separator = '==============='
+    puts "\n\n#{separator}"
+    menu.each_with_index { |item, index| puts "#{index + 1}. #{item[:title]}"}
+    puts "#{separator}\n\n"
   end
 
   def show_welcome_message(player_name, dealer_name, player_balance, dealer_balance)
@@ -28,6 +35,30 @@ class Interface
       #{player_name} final score is #{player_balance}
       #{dealer_name} final score is #{dealer_balance}
       "
+  end
+
+  def show_user_score(score)
+    puts "Your score is: #{score}"
+  end
+
+  def show_user_card(user)
+    puts user.hand
+  end
+
+  def ask_user_move(full_hand, user_name)
+    user_menu = USER_MENU.dup
+    user_menu.reject! { |menu_item| menu_item[:command] == :add } if full_hand  
+    show_menu(user_menu)
+    # available_option = full_hand ? %s[skip open add] : %s[ skip open]
+    # user_choice = nil
+
+    # while user_choice.nil?
+    #   answer = prompt
+
+
+    # end
+
+
   end
 
   def ask_player_name
