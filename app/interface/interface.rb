@@ -20,13 +20,13 @@ class Interface
       "
   end
 
-  def show_exit_message
+  def show_exit_message(player_name, dealer_name, player_balance, dealer_balance)
     puts "
-      Bye!
+      It was a nice match, bye!
 
       The final score is:
-        Player score is #{@player.bank}
-        Dealer score is #{@dealer.bank}
+      #{player_name} final score is #{player_balance}
+      #{dealer_name} final score is #{dealer_balance}
       "
   end
 

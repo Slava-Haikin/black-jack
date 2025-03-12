@@ -18,16 +18,20 @@ class App
     @interface = Interface.new
   end
 
-  def start_game
+  def play_game
     create_player
     @interface.show_welcome_message(@player.name, @dealer.name, @player.balance, @dealer.balance)
 
     loop do
       # round_result = Round.new(@player, @dealer).start
 
+      should_exit = @player.balance.zero?
       want_exit = @interface.ask_exit_game
 
-      return if want_exit
+      if want_exit || should_exit
+        @interface.show_exit_message(@player.name, @dealer.name, @player.balance, @dealer.balance)
+        return
+      end
     end
   end
 
@@ -37,11 +41,7 @@ class App
     player_name = @interface.ask_player_name
     @player = HumanPlayer.new(player_name)
   end
-
-  def end_game
-    print 'Game ended!'
-  end
 end
 
 game = App.new
-game.start_game
+game.play_game
