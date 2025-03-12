@@ -19,8 +19,8 @@ class Round
 
   def deal_cards
     2.times do 
-      player_card = @deck.give_card
-      dealer_card = @deck.give_card
+      player_card = @deck.draw_card
+      dealer_card = @deck.draw_card
 
       @player.take_card(player_card)
       @dealer.take_card(dealer_card)
