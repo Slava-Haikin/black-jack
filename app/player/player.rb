@@ -17,6 +17,6 @@ class Player
   end
 
   def drop_cards
-    @cards = []
+    @hand = []
   end
 end

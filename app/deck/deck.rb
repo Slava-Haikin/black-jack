@@ -10,15 +10,7 @@ class Deck
     '♣A', '♣2', '♣3', '♣4', '♣5', '♣6', '♣7', '♣8', '♣9', '♣10', '♣J', '♣Q', '♣K'
   ].freeze
 
-  def initialize
-    @deck = CARDS.dup.shuffle
-  end
-
-  def draw_card
-    @deck.pop
-  end
-
-  def calculate_card_value(current_score, card)
+  def self.calculate_card_value(current_score, card)
     value = card[1..]
 
     case value
@@ -29,5 +21,13 @@ class Deck
     else
       value.to_i
     end
+  end
+
+  def initialize
+    @deck = CARDS.dup.shuffle
+  end
+
+  def draw_card
+    @deck.pop
   end
 end

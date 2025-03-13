@@ -41,7 +41,7 @@ class Round
       dealer_card_score = @deck.calculate_card_value(@dealer_score, dealer_card)
 
       @user_score += user_card_score
-      @user_score += dealer_card_score
+      @dealer_score += dealer_card_score
       @user.take_card(user_card)
       @dealer.take_card(dealer_card)
     end
@@ -49,7 +49,7 @@ class Round
 
   def make_stakes
     @user.balance -= @stake_amount
-    @user.balance -= @stake_amount
+    @dealer.balance -= @stake_amount
   end
 
   def withdraw_money(target_player)

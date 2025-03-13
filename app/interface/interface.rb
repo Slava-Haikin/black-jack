@@ -41,7 +41,7 @@ class Interface
     puts "Your score is: #{score}"
   end
 
-  def show_user_card(user)
+  def show_user_hand(user)
     puts user.hand
   end
 
@@ -68,9 +68,8 @@ class Interface
 
   def ask_exit_game
     print 'Do you want to continue the game, Yes/No? My answer is: '
-    answer = prompt.capitalize
-
-    answer.downcase != 'yes'
+    answer = prompt.strip.downcase
+    answer == 'no'
   end
 
   private
