@@ -49,13 +49,19 @@ class Interface
     user_menu = USER_MENU.dup
     user_menu.reject! { |menu_item| menu_item[:command] == :add } if full_hand
     show_menu(user_menu)
-    # available_option = full_hand ? %s[skip open add] : %s[ skip open]
-    # user_choice = nil
 
-    # while user_choice.nil?
-    #   answer = prompt
+    user_choice = nil
 
-    # end
+    loop do
+      answer = prompt.strip.downcase
+      user_choice = user_menu.each_with_index.find do |(menu_item, index)|
+        menu_item[:input].include?(answer) || index + 1 == answer.to_i
+      end&.first      
+
+      return user_choice[:command] if user_choice
+
+      puts 'Invalid choice. Try again.'
+    end
   end
 
   def ask_player_name

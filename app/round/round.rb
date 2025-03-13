@@ -20,13 +20,12 @@ class Round
 
     make_stakes
     deal_cards
-
     @interface.show_user_score(@user_score)
 
     while winner.nil?
-
-      user_move
-      dealer_move
+      @user.make_move(@player_max_hand_size, @interface)
+      @dealer.make_move(@dealer_score)
+      calculate_scores(@user.hand, @dealer.hand)
       winner = check_result
     end
 
@@ -57,14 +56,12 @@ class Round
   end
 
   def check_result
-    @user.hand.size
-    @dealer_score > @score_limit
+    # Дописать проверку результата
+    # @user.hand.size
+    # @dealer_score > @score_limit
   end
 
-  def user_move
-    full_hand = @user.hand.size >= @player_max_hand_size
-    @interface.ask_user_move(full_hand, @user.name)
+  def calculate_scores
+    
   end
-
-  def dealer_move; end
 end

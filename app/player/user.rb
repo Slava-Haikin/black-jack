@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
-# Класс HumanPlayer представляет компьютерного игрока в блэкджеке.
+# Класс User представляет компьютерного игрока в блэкджеке.
 #
 class User < Player
-  def make_turn(move_turn); end
+  def make_move(max_hand_size, interface)
+    full_hand = @hand.size >= max_hand_size
+    interface.ask_user_move(full_hand, @name)
+  end
 end
