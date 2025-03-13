@@ -37,8 +37,8 @@ class Round
     2.times do
       user_card = @deck.draw_card
       dealer_card = @deck.draw_card
-      user_card_score = @deck.calculate_card_value(@user_score, user_card)
-      dealer_card_score = @deck.calculate_card_value(@dealer_score, dealer_card)
+      user_card_score = Deck.calculate_card_value(@user_score, user_card)
+      dealer_card_score = Deck.calculate_card_value(@dealer_score, dealer_card)
 
       @user_score += user_card_score
       @dealer_score += dealer_card_score

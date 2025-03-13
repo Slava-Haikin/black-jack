@@ -4,15 +4,15 @@
 #
 class Interface
   USER_MENU = [
-    { command: :skip, title: '[S]kip turn', input: ['s', 'skip turn', 'skip']},
-    { command: :open, title: '[O]pen cards', input: ['o', 'open cards', 'open']},
-    { command: :add, title: '[A]dd card', input: ['a', 'add card', 'add']},
-].freeze
+    { command: :skip, title: '[S]kip turn', input: ['s', 'skip turn', 'skip'] },
+    { command: :open, title: '[O]pen cards', input: ['o', 'open cards', 'open'] },
+    { command: :add, title: '[A]dd card', input: ['a', 'add card', 'add'] }
+  ].freeze
 
   def show_menu(menu)
     separator = '==============='
     puts "\n\n#{separator}"
-    menu.each_with_index { |item, index| puts "#{index + 1}. #{item[:title]}"}
+    menu.each_with_index { |item, index| puts "#{index + 1}. #{item[:title]}" }
     puts "#{separator}\n\n"
   end
 
@@ -45,9 +45,9 @@ class Interface
     puts user.hand
   end
 
-  def ask_user_move(full_hand, user_name)
+  def ask_user_move(full_hand, _user_name)
     user_menu = USER_MENU.dup
-    user_menu.reject! { |menu_item| menu_item[:command] == :add } if full_hand  
+    user_menu.reject! { |menu_item| menu_item[:command] == :add } if full_hand
     show_menu(user_menu)
     # available_option = full_hand ? %s[skip open add] : %s[ skip open]
     # user_choice = nil
@@ -55,10 +55,7 @@ class Interface
     # while user_choice.nil?
     #   answer = prompt
 
-
     # end
-
-
   end
 
   def ask_player_name
