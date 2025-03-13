@@ -16,38 +16,33 @@ class Round
   end
 
   def start
-    winner = nil
-
     make_stakes
     deal_cards
     @interface.show_user_score(@user_score)
 
-    while winner.nil?
+    loop do
       user_move_choice = @user.make_move(@player_max_hand_size, @interface)
-      players_move(user_move_choice)
+      max_cards_amount_reached = @user.hand.size == 3 && @dealer.hand.size == 3
+      process_players_move(user_move_choice)
 
       calculate_scores
-      puts @user_score, @dealer_score
       winner = check_winner
-      puts winner
-    end
+      puts @user_score, @dealer_score, winner
+      next unless user_move_choice == :open || max_cards_amount_reached
 
-    @interface.show_winner_message(winner)
-    @user.drop_cards
-    @dealer.drop_cards
+      @interface.show_winner_message(winner)
+      withdraw_money(winner)
+      @user.drop_cards
+      @dealer.drop_cards
+      return
+    end
   end
 
   def deal_cards
     2.times do
-      user_card = @deck.draw_card
-      dealer_card = @deck.draw_card
-      user_card_score = Deck.calculate_card_value(@user_score, user_card)
-      dealer_card_score = Deck.calculate_card_value(@dealer_score, dealer_card)
-
-      @user_score += user_card_score
-      @dealer_score += dealer_card_score
-      @user.take_card(user_card)
-      @dealer.take_card(dealer_card)
+      @user.take_card(@deck.draw_card)
+      @dealer.take_card(@deck.draw_card)
+      calculate_scores
     end
   end
 
@@ -61,8 +56,8 @@ class Round
   end
 
   def calculate_scores
-    @user_score = @user.hand.sum { |card| Deck.calculate_card_value(@user_score, card) }
-    @dealer_score = @dealer.hand.sum { |card| Deck.calculate_card_value(@dealer_score, card) }
+    @user_score = Deck.calculate_card_value(@user.hand)
+    @dealer_score = Deck.calculate_card_value(@dealer.hand)
   end
 
   def check_winner
@@ -70,12 +65,12 @@ class Round
       @dealer
     elsif @dealer_score > @score_limit
       @user
-    elsif @user.hand.size == @player_max_hand_size && @dealer.hand.size == @player_max_hand_size
+    else
       @user_score > @dealer_score ? @user : @dealer
     end
   end
 
-  def players_move(choice)
+  def process_players_move(choice)
     case choice
     when :skip
       dealer_choice = @dealer.make_move(@dealer_score)
@@ -83,17 +78,17 @@ class Round
     when :add
       new_card = @deck.draw_card
       @user.take_card(new_card)
-      
+
       dealer_choice = @dealer.make_move(@dealer_score)
       process_dealer_move(dealer_choice)
     when :open
-      return
+      nil
     end
   end
 
   def process_dealer_move(choice)
     return if choice == :skip
-  
+
     new_card = @deck.draw_card
     @dealer.take_card(new_card)
   end

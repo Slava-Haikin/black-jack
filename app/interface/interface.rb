@@ -60,7 +60,7 @@ class Interface
       answer = prompt.strip.downcase
       user_choice = user_menu.each_with_index.find do |(menu_item, index)|
         menu_item[:input].include?(answer) || index + 1 == answer.to_i
-      end&.first      
+      end&.first
 
       return user_choice[:command] if user_choice
 
