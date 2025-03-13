@@ -45,6 +45,10 @@ class Interface
     puts user.hand
   end
 
+  def show_winner_message(winner)
+    puts "#{winner.name} has won! Congratulions."
+  end
+
   def ask_user_move(full_hand, _user_name)
     user_menu = USER_MENU.dup
     user_menu.reject! { |menu_item| menu_item[:command] == :add } if full_hand
