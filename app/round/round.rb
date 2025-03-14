@@ -21,6 +21,7 @@ class Round
   end
 
   private
+
   def deal_cards
     2.times do
       @user.take_card(@deck.draw_card)
@@ -61,19 +62,12 @@ class Round
   end
 
   def process_players_move(choice)
-    case choice
-    when :skip
-      dealer_choice = @dealer.make_move(@dealer_score)
-      process_dealer_move(dealer_choice)
-    when :add
-      new_card = @deck.draw_card
-      @user.take_card(new_card)
+    return if choice == :open
 
-      dealer_choice = @dealer.make_move(@dealer_score)
-      process_dealer_move(dealer_choice)
-    when :open
-      nil
-    end
+    @user.take_card(@deck.draw_card) if choice == :add
+
+    dealer_choice = @dealer.make_move(@dealer_score)
+    process_dealer_move(dealer_choice)
   end
 
   def prepare_round
