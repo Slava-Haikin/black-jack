@@ -52,7 +52,11 @@ class Round
   end
 
   def withdraw_money(target_player)
-    target_player.balance += @stake_amount * 2
+    if target_player.is_a?(Array)
+      target_player.each { |player| player.balance += @stake_amount }
+    else
+      target_player.balance += @stake_amount * 2
+    end
   end
 
   def calculate_scores
@@ -61,7 +65,9 @@ class Round
   end
 
   def check_winner
-    if @user_score > @score_limit
+    if @user_score > @score_limit && @dealer_score > @score_limit
+      [@user, @dealer]
+    elsif @user_score > @score_limit
       @dealer
     elsif @dealer_score > @score_limit
       @user
@@ -89,9 +95,9 @@ class Round
   def process_dealer_move(choice)
     return if choice == :skip
 
-    if @dealer.hand.size <= 2
-      new_card = @deck.draw_card
-      @dealer.take_card(new_card)
-    end
+    return unless @dealer.hand.size <= 2
+
+    new_card = @deck.draw_card
+    @dealer.take_card(new_card)
   end
 end
