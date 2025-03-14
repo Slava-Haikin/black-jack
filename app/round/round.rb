@@ -91,6 +91,13 @@ class Round
     end
   end
 
+  def finish_round(winner)
+    @interface.show_winner_message(winner)
+    withdraw_money(winner)
+    @user.drop_cards
+    @dealer.drop_cards
+  end
+
   def process_dealer_move(choice)
     return if choice == :skip
 
