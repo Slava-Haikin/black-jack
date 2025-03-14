@@ -11,25 +11,15 @@ class Deck
   ].freeze
 
   def self.calculate_card_value(hand)
-    aces_count = 0
-    total = 0
-
-    hand.each do |card|
-      value = card[1..]
-      case value
-      when 'A'
-        aces_count += 1
-      when 'K', 'Q', 'J'
-        total += 10
-      else
-        total += value.to_i
+    total, aces_count = hand.reduce([0, 0]) do |(sum, aces), card|
+      case card[1..]
+      when 'A' then [sum, aces + 1]
+      when 'K', 'Q', 'J' then [sum + 10, aces]
+      else [sum + card[1..].to_i, aces]
       end
     end
 
-    aces_count.times do
-      total += total + 11 <= 21 ? 11 : 1
-    end
-
+    aces_count.times { total += total + 11 <= 21 ? 11 : 1 }
     total
   end
 

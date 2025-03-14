@@ -16,28 +16,11 @@ class Round
   end
 
   def start
-    make_stakes
-    deal_cards
-
-    loop do
-      @interface.show_user_score(@user_score)
-      user_move_choice = @user.make_move(@player_max_hand_size, @interface)
-      process_players_move(user_move_choice)
-
-      calculate_scores
-      winner = check_winner
-
-      max_cards_amount_reached = @user.hand.size >= 3 && @dealer.hand.size >= 3
-      next unless user_move_choice == :open || max_cards_amount_reached
-
-      @interface.show_winner_message(winner)
-      withdraw_money(winner)
-      @user.drop_cards
-      @dealer.drop_cards
-      return
-    end
+    prepare_round
+    play_round
   end
 
+  private
   def deal_cards
     2.times do
       @user.take_card(@deck.draw_card)
@@ -65,7 +48,8 @@ class Round
   end
 
   def check_winner
-    if @user_score > @score_limit && @dealer_score > @score_limit
+    draw = @user_score > @score_limit && @dealer_score > @score_limit || @user_score == @dealer_score
+    if draw
       [@user, @dealer]
     elsif @user_score > @score_limit
       @dealer
@@ -92,12 +76,41 @@ class Round
     end
   end
 
+  def prepare_round
+    make_stakes
+    deal_cards
+  end
+
+  def play_round
+    loop do
+      @interface.show_user_score(@user_score)
+      user_move_choice = @user.make_move(@player_max_hand_size, @interface)
+      process_players_move(user_move_choice)
+
+      calculate_scores
+      winner = check_winner
+
+      next unless round_should_end?(user_move_choice)
+
+      finish_round(winner)
+      return
+    end
+  end
+
   def process_dealer_move(choice)
     return if choice == :skip
 
-    return unless @dealer.hand.size <= 2
+    return unless @dealer.hand.size <= @player_max_hand_size
 
     new_card = @deck.draw_card
     @dealer.take_card(new_card)
+  end
+
+  def round_should_end?(user_move_choice)
+    user_move_choice == :open || both_players_reached_max_cards?
+  end
+
+  def both_players_reached_max_cards?
+    @user.hand.size >= @player_max_hand_size && @dealer.hand.size >= @player_max_hand_size
   end
 end

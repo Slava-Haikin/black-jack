@@ -50,22 +50,9 @@ class Interface
   end
 
   def ask_user_move(full_hand, _user_name)
-    user_menu = USER_MENU.dup
-    user_menu.reject! { |menu_item| menu_item[:command] == :add } if full_hand
+    user_menu = filtered_user_menu(full_hand)
     show_menu(user_menu)
-
-    user_choice = nil
-
-    loop do
-      answer = prompt.strip.downcase
-      user_choice = user_menu.each_with_index.find do |(menu_item, index)|
-        menu_item[:input].include?(answer) || index + 1 == answer.to_i
-      end&.first
-
-      return user_choice[:command] if user_choice
-
-      puts 'Invalid choice. Try again.'
-    end
+    get_user_choice(user_menu)
   end
 
   def ask_player_name
@@ -80,6 +67,24 @@ class Interface
   end
 
   private
+
+  def filtered_user_menu(full_hand)
+    menu = USER_MENU.dup
+    menu.reject! { |item| item[:command] == :add } if full_hand
+    menu
+  end
+
+  def get_user_choice(user_menu)
+    loop do
+      answer = prompt.strip.downcase
+      choice = user_menu.each_with_index.find do |(item, index)|
+        item[:input].include?(answer) || index + 1 == answer.to_i
+      end&.first
+      return choice[:command] if choice
+
+      puts 'Invalid choice. Try again.'
+    end
+  end
 
   def prompt(prompt_number: false)
     loop do
