@@ -13,7 +13,7 @@ class Deck
   def self.calculate_card_value(hand)
     aces_count = 0
     total = 0
-  
+
     hand.each do |card|
       value = card[1..]
       case value
@@ -25,14 +25,13 @@ class Deck
         total += value.to_i
       end
     end
-  
+
     aces_count.times do
-      total += (total + 11 <= 21) ? 11 : 1
+      total += total + 11 <= 21 ? 11 : 1
     end
-  
+
     total
   end
-  
 
   def initialize
     @deck = CARDS.dup.shuffle

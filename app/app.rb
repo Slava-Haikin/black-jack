@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# Класс App управляет всем приложением: Начинает и завершает игру.
-
 require_relative 'round/round'
 
 require_relative 'player/player'
@@ -11,6 +9,7 @@ require_relative 'player/user'
 require_relative 'interface/interface'
 require_relative 'deck/deck'
 
+# Класс App управляет всем приложением: Начинает и завершает игру.
 class App
   def initialize
     @user = nil

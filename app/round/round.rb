@@ -18,16 +18,16 @@ class Round
   def start
     make_stakes
     deal_cards
-    @interface.show_user_score(@user_score)
 
     loop do
+      @interface.show_user_score(@user_score)
       user_move_choice = @user.make_move(@player_max_hand_size, @interface)
-      max_cards_amount_reached = @user.hand.size == 3 && @dealer.hand.size == 3
       process_players_move(user_move_choice)
 
       calculate_scores
       winner = check_winner
-      puts @user_score, @dealer_score, winner
+
+      max_cards_amount_reached = @user.hand.size >= 3 && @dealer.hand.size >= 3
       next unless user_move_choice == :open || max_cards_amount_reached
 
       @interface.show_winner_message(winner)
@@ -89,7 +89,9 @@ class Round
   def process_dealer_move(choice)
     return if choice == :skip
 
-    new_card = @deck.draw_card
-    @dealer.take_card(new_card)
+    if @dealer.hand.size <= 2
+      new_card = @deck.draw_card
+      @dealer.take_card(new_card)
+    end
   end
 end

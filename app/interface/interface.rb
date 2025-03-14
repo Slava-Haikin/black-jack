@@ -18,13 +18,13 @@ class Interface
 
   def show_welcome_message(player_name, dealer_name, player_balance, dealer_balance)
     puts "
-      Welcome to the Black Jack Game!
+  Welcome to the Black Jack Game!
 
-      #{player_name} is playing vs #{dealer_name}
+  #{player_name} is playing vs #{dealer_name}
 
-      #{player_name} score is #{player_balance}
-      #{dealer_name} score is #{dealer_balance}
-      "
+  #{player_name} score is #{player_balance}
+  #{dealer_name} score is #{dealer_balance}
+    "
   end
 
   def show_exit_message(player_name, dealer_name, player_balance, dealer_balance)
