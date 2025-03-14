@@ -11,19 +11,28 @@ class Deck
   ].freeze
 
   def self.calculate_card_value(hand)
-    values = hand.map do |card|
-      case card[1..]
-      when 'A' then 11
-      when 'K', 'Q', 'J' then 10
-      else card[1..].to_i
+    aces_count = 0
+    total = 0
+  
+    hand.each do |card|
+      value = card[1..]
+      case value
+      when 'A'
+        aces_count += 1
+      when 'K', 'Q', 'J'
+        total += 10
+      else
+        total += value.to_i
       end
     end
-
-    total = values.sum
-    values.count(11).times { total -= 10 if total > 21 }
-
+  
+    aces_count.times do
+      total += (total + 11 <= 21) ? 11 : 1
+    end
+  
     total
   end
+  
 
   def initialize
     @deck = CARDS.dup.shuffle
