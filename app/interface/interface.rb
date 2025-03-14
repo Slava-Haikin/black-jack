@@ -46,7 +46,7 @@ class Interface
   end
 
   def show_winner_message(winner)
-    winner_message = winner.is_a?(Array) ? "It is a draw." : "#{winner.name} has won! Congratulions."
+    winner_message = winner.is_a?(Array) ? 'It is a draw.' : "#{winner.name} has won! Congratulions."
     puts winner_message
   end
 
