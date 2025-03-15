@@ -37,12 +37,16 @@ class Interface
       "
   end
 
-  def show_user_score(score)
-    puts "Your score is: #{score}"
+  def show_player_result(player, score)
+    puts "\n"
+    puts "#{player.name} cards are:"
+    player.hand.each { |card| puts card}
+    show_user_score(score, player)
+    puts "\n"
   end
 
-  def show_user_hand(user)
-    puts user.hand
+  def show_user_score(score, player = nil)
+    puts "#{player ? player.name : 'Your'} score is: #{score}"
   end
 
   def show_winner_message(winner)

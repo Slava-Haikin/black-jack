@@ -93,6 +93,9 @@ class Round
 
   def finish_round(winner)
     @interface.show_winner_message(winner)
+    @interface.show_player_result(@dealer, @dealer_score)
+    @interface.show_player_result(@user, @user_score)
+
     withdraw_money(winner)
     @user.drop_cards
     @dealer.drop_cards
