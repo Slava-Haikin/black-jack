@@ -40,7 +40,7 @@ class Interface
   def show_player_result(player, score)
     puts "\n"
     puts "#{player.name} cards are:"
-    player.hand.each { |card| puts card}
+    player.hand.each { |card| puts card }
     show_user_score(score, player)
     puts "\n"
   end
